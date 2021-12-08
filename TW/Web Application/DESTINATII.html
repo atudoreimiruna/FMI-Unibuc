@@ -1,0 +1,122 @@
+<!DOCTYPE>
+<html lang="ro"></html>
+
+<head>
+    <link rel="stylesheet" href="DESTINATII.css">
+    <meta charset="UTF-8">
+    <meta name="keywords" content="HTML, CSS">
+
+    <img src="Logo YourTravelList.png" style="width:30%">
+    <div class="topnav">
+        <a class="active" href="https://www.facebook.com/atudorei.mirunagabriela/"> <img class="imgtop" src="facebook.png" width="20" height="20"> </a>
+        <a class="active" href="https://ro.pinterest.com/miruna_miruna60/_saved/"> <img class="imgtop" src="Pinterest2.jpeg" width="20" height="20"> </a>
+        <a class="active" href="https://www.instagram.com/mirunagabriela8/"> <img class="imgtop" src="Instagram.png" width="20" height="20"> </a>
+        <a class="active" href="https://www.youtube.com/channel/UC-QlyYoMKkXd-EVVHxgBJVg"> <img class="imgtop" src="youtube.png" width="20" height="20"> </a>
+
+        <a href="file:///Users/atudorei.miruna08/Desktop/facultate/An1_Sem2/TW_Lab/YourTravelList/FirstPage.html">HOME</a>
+        <a href="file:///Users/atudorei.miruna08/Desktop/facultate/An1_Sem2/TW_Lab/YourTravelList/DESTINATII.html">DESTINAȚII</a>
+        <a href="file:///Users/atudorei.miruna08/Desktop/facultate/An1_Sem2/TW_Lab/YourTravelList/ARHITECTURA.html">ARHITECTURĂ</a>
+        <a href="file:///Users/atudorei.miruna08/Desktop/facultate/An1_Sem2/TW_Lab/YourTravelList/CONTACT.html">CONTACT</a>
+        <a href="file:///Users/atudorei.miruna08/Desktop/facultate/An1_Sem2/TW_Lab/YourTravelList/PRESETS.html">FILTRE LIGHTROOM</a>
+        <input type="text" placeholder="Search here...">
+      </div>
+</head>
+
+<body>
+    <header class="header">
+        <h1 class="title"></h1>
+    </header>
+    
+    <img src="IMG_6874.jpg" style="width:50%">
+
+    <h2>Let's travel together!</h2>
+
+    <img id="myImage" src="map.jpeg" style="width:30%">
+
+    <button class="button" onclick="document.getElementById('myImage').src='IMG_5404.jpg'">Take me to China!</button>
+
+    <button class="button" onclick="document.getElementById('myImage').src='IMG_5408.jpg'">Take me to Italy!</button>
+
+    <button class="button" onclick="document.getElementById('myImage').src='IMG_7942.jpg'">Take me to Spain!</button>
+
+    <button class="button" onclick="document.getElementById('myImage').src='IMG_4239.jpg'">Take me to Romania!</button>
+
+    <h2> Idei de destinații în care vei dori sigur să călătorești! </h2>
+
+    <h3> Apasă pentru mai multe idei! </h3>
+    
+    <div id="generatedContent"></div>
+
+    <button class="button" onclick="createNewElement()">Vezi destinațiile!</button>
+    <button class="button" onclick="removeLastElement()">Am ales o destinație!</button>
+
+    <h2> Haideți în vacanță! </h2>
+
+    <ul>
+      <li>Destinația aleasă: <input type="text" id="places" /></li>
+      <li>Obiectivul turistic principal: <input type="text" id="main_place" /></li>
+      <li>Cu cine dorești să călătorești: <input type="text" id="person" /></li>
+    </ul>
+
+    <button id="story-button" class="button">Vezi povestea!</button>
+
+    <div id="story"></div>
+
+    <h2>Calculează costul vacanței tale!</h2>
+
+  <h3>Calculează costul pentru cazare!</h3>
+
+  <label>Prețul unei nopți de cazare:
+    <input type="number" id="price-night" size="4" />
+  </label>
+
+  <label>Numărul de nopți de cazare:
+    <input type="number" id="number-nights" size="2" />
+  </label>
+
+  <label>Discount:
+    <input type="number" id="discount" size="2" />
+  </label>
+
+  <button id="cazare-button">Calculează prețul pentru cazare!</button>
+  <br /><br />
+
+  <div id="solution1"></div>
+
+  <h3>Calculează prețul biletului de avion!</h3>
+
+  <label>Prețul inițial al biletului:
+  <input type="number" id="first-price" size="4" />
+  </label>
+
+  <label>Prețul bagajelor:
+  <input type="number" id="baggage-price" size="4" />
+  </label>
+
+  <label>Taxe:
+  <input type="number" id="tax-price" size="4" />
+  </label>
+
+  <button id="bilet-button">Calculează prețul pentru biletul de avion!</button>
+  <br /><br />
+
+  <div id="solution2"></div>
+    
+  <h1>Barcelona</h1>
+
+<div class="textlp">
+    <p>Barcelona oferă o oportunitate unică pentru turiști, de a se plimba de la rămășițele romane spre cetatea medievală, și spre orașul modern cu bulevardele sale deschise și toate intersecțiile lăsate largi de colțurile clădirilor tăiate în mod unic. Centrul istoric al orașului este aproape plat, în timp ce orașul modern se întinde spre dealurile înconjurătoare, având străzi ce cresc în altitudine, ce aduc aminte de San Francisco.</p>
+    <p>Remarcabilă este moștenirea orașului de la arhitectul Antoni Gaudí, care a locuit și a lucrat la Barcelona, și care a lăsat lucrări faimoase ca Palau Güell, Parc Güell și imensa, dar încă neterminata biserică Sagrada Família, care este în construcție din 1882, fiind finanțată din bani publici ca și catedralele din Evul Mediu. Se așteaptă să fie terminată până în 2020.</p>
+    <p>Sursă: https://ro.wikipedia.org/wiki/Barcelona#Atrac%C8%9Bii_turistice</p>
+</div>
+
+    <h2>Things to do in Barcelona</h2>
+
+    <div class="textlp">
+        <p>Următoarele atracții turistice sunt reprezentative pentru Barcelona, iar pentru fiecare în parte avem notate anul construcției și arhitecții. </p>
+    </div>
+
+    <script src="DESTINATII.js"></script>
+
+</body>
+</html>

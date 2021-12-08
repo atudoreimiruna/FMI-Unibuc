@@ -1,0 +1,39 @@
+{
+  "cameras": [
+    {
+      "id": 5,
+      "name": "GREAT BEGINNER CAMERA - FUJIFILM X-T30 Camera",
+      "img": "https://images-na.ssl-images-amazon.com/images/I/71g6X-5f6GL._AC_SL1500_.jpg"
+    },
+    {
+      "name": "MY FAV CAMERA PURSE - Lo & Sons Clarement",
+      "img": "https://cdn.shopify.com/s/files/1/2185/1497/products/front-claremont-full-grain-leather-sienna-crossbody-bag-lo-and-sons_ffba8b78-a6ff-423e-880b-9a467df14acb.jpg?v=1571611309",
+      "id": 6
+    },
+    {
+      "name": "COMPACT ZOOM LENS - FUJINON 55-200mm f/3.5-4.8 Lens",
+      "img": "https://images-na.ssl-images-amazon.com/images/I/81GhASxQ7LL._AC_SL1500_.jpg",
+      "id": 7
+    },
+    {
+      "name": "MY FAVORITE DRONE- DJI Mavic Air 2",
+      "img": "https://images-na.ssl-images-amazon.com/images/I/51jI9cFewvL._AC_SL1500_.jpg",
+      "id": 8
+    },
+    {
+      "name": "Camera",
+      "img": "https://www.canon-europe.com/media/eos_range_tcm13-1266213.png",
+      "id": 9
+    },
+    {
+      "name": "GREAT CAMERA - FUJIFILM X-T30 Camera",
+      "img": "https://images-na.ssl-images-amazon.com/images/I/71g6X-5f6GL._AC_SL1500_.jpg",
+      "id": 10
+    },
+    {
+      "name": "GREAT CAMERA - FUJIFILM X-T30 Camera",
+      "img": "https://images-na.ssl-images-amazon.com/images/I/71g6X-5f6GL._AC_SL1500_.jpg",
+      "id": 11
+    }
+  ]
+}

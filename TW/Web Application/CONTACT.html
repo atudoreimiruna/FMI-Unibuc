@@ -1,0 +1,61 @@
+<!DOCTYPE>
+<html lang="ro"></html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="CONTACT.css">
+    <link rel="stylesheet" href="FORM.css">
+    <script defer src="CONTACT.js"></script> 
+    <meta name="keywords" content="HTML, CSS">
+
+    <img src="Logo YourTravelList.png" style="width:30%">
+
+    <div class="topnav">
+        <a class="active" href="https://www.facebook.com/atudorei.mirunagabriela/"> <img src="facebook.png" width="20" height="20"> </a>
+        <a class="active" href="https://ro.pinterest.com/miruna_miruna60/_saved/"> <img src="Pinterest2.jpeg" width="20" height="20"> </a>
+        <a class="active" href="https://www.instagram.com/mirunagabriela8/"> <img src="Instagram.png" width="20" height="20"> </a>
+        <a class="active" href="https://www.youtube.com/channel/UC-QlyYoMKkXd-EVVHxgBJVg"> <img src="youtube.png" width="20" height="20"> </a>
+
+        <a href="file:///Users/atudorei.miruna08/Desktop/facultate/An1_Sem2/TW_Lab/YourTravelList/FirstPage.html">HOME</a>
+        <a href="file:///Users/atudorei.miruna08/Desktop/facultate/An1_Sem2/TW_Lab/YourTravelList/DESTINATII.html">DESTINAȚII</a>
+        <a href="file:///Users/atudorei.miruna08/Desktop/facultate/An1_Sem2/TW_Lab/YourTravelList/ARHITECTURA.html">ARHITECTURĂ</a>
+        <a href="file:///Users/atudorei.miruna08/Desktop/facultate/An1_Sem2/TW_Lab/YourTravelList/CONTACT.html">CONTACT</a>
+        <a href="file:///Users/atudorei.miruna08/Desktop/facultate/An1_Sem2/TW_Lab/YourTravelList/PRESETS.html">FILTRE LIGHTROOM</a>
+        <input type="text" placeholder="Search here...">
+      </div>
+</head>
+<body>
+    <header class="header">
+        <h1 class="title"></h1>
+    </header>
+    <img src="copie Small Logo.jpeg" width="1430">
+
+    <img src="contact.png" style="width:50%">
+
+    <h2> Interested in working together? </h2>
+
+    <div onmouseover="mOver(this)" onmouseout="mOut(this)" 
+    style="background-color: #ffe6e6;
+            height: auto;
+            max-width: 100%;
+            padding: 40px;
+            text-align: center;
+            color: black" >
+    I'll wait your messages on this email address!
+    </div>
+
+    <h2>Mi-ar plăcea să îți aflu părerea! O poți adăuga sub forma unui mesaj chiar aici!</h2>
+    <input id="name" placeholder="Name">
+    <input id="message" placeholder="Message">
+    <button onclick="addMessage()" id="addFeedback">Add my message</button>
+    <button onclick="editMessage()">Save Edit</button>
+    <div id="content">
+    </div>
+
+    <script src="CONTACT.js"></script>
+
+    <footer class="footer">
+        <p class="copyright">You can follow me on my social media accounts for more inspirations! </p>
+    </footer>
+    
+</body>
+</html>
