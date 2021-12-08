@@ -1,0 +1,77 @@
+2000 2000
+BubbleSort 0 milisecunde 1
+
+CountSort 0 milisecunde 1
+
+RadixSort 0 milisecunde 1
+
+MergeSort 0 milisecunde 1
+
+QuickSort 0 milisecunde 1
+
+QuickSortRand 0 milisecunde 1
+
+QuickSortMOT 0 milisecunde 1
+
+Functia sort din STL 0 milisecunde 1
+
+2500 2500
+BubbleSort 0 milisecunde 1
+
+CountSort 0 milisecunde 1
+
+RadixSort 0 milisecunde 1
+
+MergeSort 0 milisecunde 1
+
+QuickSort 0 milisecunde 1
+
+QuickSortRand 0 milisecunde 1
+
+QuickSortMOT 0 milisecunde 1
+
+Functia sort din STL 0 milisecunde 1
+
+50000 20000
+BubbleSort 0 milisecunde 1
+
+CountSort 0 milisecunde 1
+
+RadixSort 0 milisecunde 1
+
+MergeSort 0 milisecunde 1
+
+QuickSort 4 milisecunde 1
+
+QuickSortRand 0 milisecunde 1
+
+QuickSortMOT 0 milisecunde 1
+
+Functia sort din STL 0 milisecunde 1
+
+100000 500
+BubbleSort nu este eficient pentru tablouri foarte mari.
+CountSort 0 milisecunde 1
+
+RadixSort 0 milisecunde 1
+
+MergeSort 0 milisecunde 1
+
+QuickSort 20 milisecunde 1
+
+QuickSortRand 0 milisecunde 1
+
+QuickSortMOT 0 milisecunde 1
+
+Functia sort din STL 0 milisecunde 1
+
+
+Vector deja sortat: 
+100000 10000
+BubbleSort nu este eficient pentru tablouri foarte mari.
+CountSort 0 milisecunde 0
+RadixSort 0 milisecunde 0
+MergeSort 0 milisecunde 1
+QuickSort 19 milisecunde 1
+QuickSortRand 0 milisecunde 1
+QuickSortMOT 0 milisecunde 1
