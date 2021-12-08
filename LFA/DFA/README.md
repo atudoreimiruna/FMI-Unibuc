@@ -1,1 +1,1 @@
-Deterministic Finite Automat
+# Deterministic Finite Automaton ( DFA )
