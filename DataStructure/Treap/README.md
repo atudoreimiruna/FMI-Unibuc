@@ -1,4 +1,4 @@
-Treap operations 
+Treap operations:
 1. Search
 2. Insertion
 3. Delete
