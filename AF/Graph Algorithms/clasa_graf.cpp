@@ -4,136 +4,120 @@
 #include <stack>
 #include <algorithm>
 #include <queue>
-
+ 
 #define inf 1000000000
 #define Max 100001
 #define Max2 50005
-
+ 
 using namespace std;
-
+ 
 ifstream fin("clasa_graf.in");
 ofstream fout("clasa_graf.out");
-
+ 
 int number_of_problem;
-
-int N, M, S;
+ 
+int N, M;
+ 
 bool visited[Max];
 int Stack[Max], top;
-
-int up[Max], levels[Max];
-vector<int> biconnected_components[Max];
-int number_of_biconnected_components;
-
-vector<int> scc[Max];   // strongly connected components
-bool visitedDFS[Max], visitedDFSt[Max];   // pentru DFS pe grafurile initial si transpus
-vector<int> transpose_graph[Max];
-
-int topological_sort[Max], nr;
-
-vector<int> values;
-
-struct elem
-{
-    int x, y, c;
-};
-elem WeightedGraph[4*Max];
-
-pair <int,int> APM[200002];
-int parentAPM[2*Max], degree[2*Max];
-
-int parent[Max], height[Max];
-
-int D[Max2]; // D[i] – distanta minima intre nodul de start si nodul numarul i
  
 vector <pair<int,int> >weighted_graph[Max2];
+ 
 priority_queue <pair<int,int> >q;
-
 queue <int> Queue;
 bool queue_check[Max2];
-
-int matrix[105][105];
-
+int D[Max2]; // D[i] – distanta minima intre nodul de start si nodul numarul i
+ 
 class Graph{
 private:
     int NumberOfNodes, NumberOfEdges;
     vector<int> adjacencyList[Max];
-    
+ 
 public:
     Graph(int N, int M); // constructor
-
+ 
     // citiri
     void Read_DirectedGraph();
     void Read_UndirectedGraph();
-
+ 
     // TEMA 1
-
+ 
     // BFS -- 1
-    void BFS(int Start_Node);
-
+    void BFS(int &Start_Node);
+ 
     // DFS ( numar componente conexe ) -- 2
     void DFS(int Start_Node, bool visited[]);
     int NumberOfConnectedComponents();
-
+ 
     // Biconex -- 3
     void DFS_BiconnectedComponents(int node, int parent, bool visited[], int up[], int levels[]);
     void Write_BiconnectedComponents();
-
+ 
     // Componente tare conexe -- 4
     void Read_Directed_Transpose_Graph();
     void DFS(int nod);
-    void DFS_transpose(int node, int ct);
+    void DFS_transpose(int node, int ct, bool visitedDFSt[Max]);    
     void SCC();
-    void Transpose_Graph();
     void Crossing();
-
+ 
     // Sortare topologica -- 5
     void DFS_topological_sort(int node);
     void TopologicalSort();
-
+ 
     // Hakimi -- 6
     bool Hakimi(vector<int> values, int Nr_Noduri);
-
+ 
     // TEMA 2
-
-    // APM - Kruskal -- 7
+ 
+    // APM - Kruskal -- 7 
+    // 90 puncte
     void Read_Directed_Weighted_Graph();
     void Kruskal();
-
+    int Check_Parent(int node);
+    void Connection(int x, int y, int degree[2*Max]);
+ 
     // Disjoint -- 8
     int Find_Root(int node);
     void Union_Root(int node1, int node2);
     void Disjoint();
-
+ 
     // Dijkstra -- 9
     void Read_Dijkstra();
     void Dijkstra( int node );
     void Write_Dijkstra();
-
+ 
     // Bellman-Ford -- 10
     void Read_BellmanFord();
     bool BellmanFord( int node );
     void Write_BellmanFord();
-
+ 
     // TEMA 3
-
+ 
     // Roy-Floyd
     void RoyFloyd(int matrix[105][105]);
-
+ 
     // Diametru arbore
     void BFS_Darb(int Start_node, int &max_diameter, int &next_node);
     void Darb();
+ 
+    // TEMA 4
+ 
+    // Ciclu eulerian
+    void Eulerian_Cycle();
+    void Euler(int Start, vector <bool>&visited,vector <int>&solutions);
 };
-
+ 
 // constructor
+ 
 Graph :: Graph(int N, int M)
 {
     NumberOfNodes = N;
     NumberOfEdges = M;
 }
-
-
+ 
+ 
 // citiri
-
+ 
 void Graph :: Read_DirectedGraph()
 {
     for ( int i = 1; i <= NumberOfEdges; i++ )
@@ -143,7 +127,7 @@ void Graph :: Read_DirectedGraph()
         adjacencyList[x].push_back(y);
     }
 }
-
+ 
 void Graph :: Read_UndirectedGraph()
 {
     for ( int i = 1; i <= NumberOfEdges; i++ )
@@ -154,27 +138,27 @@ void Graph :: Read_UndirectedGraph()
         adjacencyList[y].push_back(x);
     }
 }
-
+ 
 // BFS
-
-void Graph :: BFS(int Start_Node)
+ 
+void Graph :: BFS(int &Start_Node)
 {
     bool visited[Max] = {0};
     queue <int> Q;
     int cost[Max] = {0};
     int x;
-
+ 
     // inserez nodul de start in coada vida, iar acesta va avea costul 0
     // cost[nod_Start] = 0;
     visited[Start_Node] = 1;
     Q.push(Start_Node);
-
+ 
     while ( !Q.empty() )    // cat timp coada nu este vida
     {
         // la fiecare pas luam nodul din inceputul cozii, dupa care il vom elimina
         x = Q.front();
         Q.pop();
-
+ 
         for ( int i = 0; i < adjacencyList[x].size(); i++ )
             if ( visited[adjacencyList[x][i]] == 0 )    // daca i este vecin cu nodul curent si nu este vizitat
             {
@@ -191,9 +175,9 @@ void Graph :: BFS(int Start_Node)
         else 
             fout << -1 << " ";  // daca nu se poate ajunge din nodul S la nodul i, atunci numarul corespunzator numarului i va fi -1
 }
-
+ 
 // DFS ( componente conexe )
-
+ 
 void Graph :: DFS(int Start_Node, bool visited[])
 {
     visited[Start_Node] = 1;    // se viziteaza nodul de start
@@ -204,13 +188,13 @@ void Graph :: DFS(int Start_Node, bool visited[])
         if ( visited[adjacencyList[Start_Node][i]] == 0 )
             DFS(adjacencyList[Start_Node][i], visited);
 }
-
+ 
 int Graph :: NumberOfConnectedComponents()
 {
     bool visited[NumberOfNodes];
     for ( int i = 0; i < NumberOfNodes; i++ )
         visited[i] = 0;
-
+ 
     int number_of_connected_components = 0;
     for ( int i = 1; i <= NumberOfNodes; i++ )
         if ( !visited[i] )  // daca varful curent nu este vizitat
@@ -222,15 +206,19 @@ int Graph :: NumberOfConnectedComponents()
         }
     return number_of_connected_components;
 }
-
+ 
 // Biconex 
-
+ 
+int up[Max], levels[Max];
+vector<int> biconnected_components[Max];
+int number_of_biconnected_components;
+ 
 void Graph :: DFS_BiconnectedComponents(int node, int parent, bool visited[], int up[], int levels[])
 {
     visited[node] = 1;
     up[node] = levels[node];
     Stack[++top] = node; // adaugam nodul in stiva
-
+ 
     for ( auto i : adjacencyList[node] )
     {
         if ( i == parent ) continue;
@@ -240,19 +228,19 @@ void Graph :: DFS_BiconnectedComponents(int node, int parent, bool visited[], in
         {
             levels[i] = levels[node] + 1;
             DFS_BiconnectedComponents(i, node, visited, up, levels);
-            if ( up[i] >= levels[node] )
+            if ( up[i] >= levels[node] )   // s-a gasit o muchie de intoarcere -> o comp biconexa 
             {
                 number_of_biconnected_components++;
-                while ( top && Stack[top] != i )
+                while ( top && Stack[top] != i )    // eliminam nodurile pana la nodul i 
                     biconnected_components[number_of_biconnected_components].push_back(Stack[top--]);
-                biconnected_components[number_of_biconnected_components].push_back(Stack[top--]);
-                biconnected_components[number_of_biconnected_components].push_back(node);
+                biconnected_components[number_of_biconnected_components].push_back(Stack[top--]);   // adaugam nodul i
+                biconnected_components[number_of_biconnected_components].push_back(node);   // adaugam nodul curent
             }
             up[node] = min(up[node], up[i]);
         }
     }
 }
-
+ 
 void Graph :: Write_BiconnectedComponents()
 {
     int j;
@@ -264,9 +252,13 @@ void Graph :: Write_BiconnectedComponents()
         fout << "\n";
     }
 }
-
+ 
 // Componente Tare Conexe
-
+ 
+vector<int> scc[Max];   // strongly connected components
+bool visitedDFS[Max], visitedDFSt[Max];   // pentru DFS pe grafurile initial si transpus
+vector<int> transpose_graph[Max];
+ 
 void Graph :: Read_Directed_Transpose_Graph()
 {
     for ( int i = 1; i <= NumberOfEdges; i++ )
@@ -298,18 +290,20 @@ void Graph :: Crossing()   // cel initial
             DFS(i);
 }
  
-void Graph :: DFS_transpose(int node, int ct)
+void Graph :: DFS_transpose(int node, int ct, bool visitedDFSt[Max])
 {
     visitedDFSt[node] = 1;
     scc[ct].push_back(node);
  
     for ( auto i : transpose_graph[node] )
         if ( !visitedDFSt[i] )
-            DFS_transpose(i, ct);
+            DFS_transpose(i, ct, visitedDFSt);
 }
  
 void Graph :: SCC()
 {
+    bool visitedDFSt[Max];
+ 
     int ct_comp = 0;
  
     while( top )
@@ -319,7 +313,7 @@ void Graph :: SCC()
         if( !visitedDFSt[Stack[top]] )
         {
             ct_comp ++;
-            DFS_transpose(Stack[top], ct_comp);  // DFS in graful transpus
+            DFS_transpose(Stack[top], ct_comp, visitedDFSt);  // DFS in graful transpus
         }
         top--;
     }
@@ -333,33 +327,35 @@ void Graph :: SCC()
         fout << "\n";
     }
 }
-
+ 
 // Sortare topologica
-
+ 
+int topological_sort[Max], nr;
+ 
 void Graph :: DFS_topological_sort(int node)
 {
     visited[node] = 1;
-
+ 
     for ( auto i : adjacencyList[node] )
         if ( visited[i] == 0 )
             DFS_topological_sort(i);
-
+ 
     topological_sort[++nr] = node;    
 }
-
+ 
 void Graph :: TopologicalSort()
 {
     // realizam o parcurgere în adancime si 
     // calculăm timpii finali pentru fiecare nod 
     for ( int i = 1; i <= NumberOfNodes; i++ )
         if ( visited[i] == 0 ) DFS_topological_sort(i);
-    for ( int i = NumberOfNodes; i >= 1; i-- )
+    for ( int i = NumberOfNodes; i >= 1; i-- )  // afisam in ordine descrescatoare a timpilor
         fout << topological_sort[i] << " ";
     fout << "\n";
 }
-
+ 
 // Hakimi
-
+ 
 bool Graph :: Hakimi(vector<int> values, int NumberOfNodes)
 {
     bool ok = 1;
@@ -367,13 +363,13 @@ bool Graph :: Hakimi(vector<int> values, int NumberOfNodes)
     {
         // sortam vectorul de valori descrescator
         sort ( values.begin(), values.end(), greater<int>() );
-
+ 
         // daca cea mai mare valoare este mai mare decat numarul de elemente a vectorului
         if ( values[0] > values.size() - 1 ) return 0;
-
+ 
         // daca cea mai mare valoare din vector este 0 inseamna ca tot vectorul este format din elemente egale cu 0
         if ( values[0] == 0 ) return 1;
-
+ 
         values.erase( values.begin() + 0 ); // stergem elementul cel mai mare
     
         for ( int i = 0; i < values[0]; i++ )
@@ -383,9 +379,18 @@ bool Graph :: Hakimi(vector<int> values, int NumberOfNodes)
         }
     }
 }
-
+ 
 // APM - Kruskal
-
+ 
+struct elem
+{
+    int x, y, c;
+};
+elem WeightedGraph[4*Max];
+ 
+int parentAPM[2*Max];
+pair <int,int> APM[200002];
+ 
 inline bool cmp(const elem &a, const elem &b)
 {
     return a.c < b.c;
@@ -404,15 +409,15 @@ void Graph :: Read_Directed_Weighted_Graph()
 }
  
 // functie care verifica tatal unui nod
-int Check_Parent(int node)
+int Graph :: Check_Parent(int node)
 {
     // aceasta cautare se termina cand tatal nodului curent este nodul curent
     while ( parentAPM[node] != node )
         node = parentAPM[node];
     return node;
 }
-
-void Connection(int x, int y)
+ 
+void Graph :: Connection(int x, int y, int degree[2*Max])
 {
     x = Check_Parent(x);
     y = Check_Parent(y);
@@ -420,19 +425,20 @@ void Connection(int x, int y)
     // intotdeauna legam subarborele mai mic de cel mai mare
     if ( degree[x] < degree[y] )
         degree[x] = y;
-
+ 
     if ( degree[x] > degree[y] )
         degree[y] = x;
-
+ 
     if ( degree[x] == degree[y] )
     {
         degree[x] = y;
         degree[y]++; 
     }
 }
-
+ 
 void Graph :: Kruskal()
 {
+    int degree[2*Max];
     int S = 0;
     int k = 0;
     // pentru fiecare nod din graf vom memora reprezentantul sau 
@@ -451,8 +457,8 @@ void Graph :: Kruskal()
         // acestia se vor reuni, iar muchia respectiva face parte din APM
         if ( Check_Parent(WeightedGraph[i].x) != Check_Parent(WeightedGraph[i].y) )
         {
-            Connection(Check_Parent(WeightedGraph[i].x), Check_Parent(WeightedGraph[i].y) );
-
+            Connection(Check_Parent(WeightedGraph[i].x), Check_Parent(WeightedGraph[i].y), degree );
+ 
             APM[++k].first = WeightedGraph[i].x;
             APM[k].second = WeightedGraph[i].y;
             // adunam costul total al arborelui 
@@ -465,9 +471,11 @@ void Graph :: Kruskal()
     for ( int i = 1; i <= k; i++ )
         fout << APM[i].first << " " << APM[i].second << '\n';
 }
-
+ 
 // Disjoint
-
+ 
+int parent[Max], height[Max];
+ 
 // gaseste radacina arborelui la care apartine nodul
 int Graph :: Find_Root(int node)
 {
@@ -520,9 +528,9 @@ void Graph :: Disjoint()
         }
     }
 }
-
+ 
 // Dijkstra
-
+ 
 void Graph :: Read_Dijkstra()
 {
     for ( int i = 1; i <= NumberOfEdges; i++ )
@@ -582,9 +590,9 @@ void Graph :: Write_Dijkstra()
             fout << "0 ";
     }
 }
-
+ 
 // Bellman-Ford
-
+ 
 void Graph :: Read_BellmanFord()
 {
     for ( int i = 1; i <= NumberOfEdges; i++ )
@@ -650,35 +658,37 @@ void Graph :: Write_BellmanFord()
     else
         fout << "Ciclu negativ!";
 }
-
+ 
 // Roy-Floyd
-
+ 
+int matrix[105][105];
+ 
 void Graph :: RoyFloyd(int matrix[105][105])
 {
     // citire si initializare 
     for ( int i = 1; i <= N; i++ )
         for ( int j = 1; j <= N; j++ )
             fin >> matrix[i][j];
-
+ 
     for ( int i = 1; i <= N; i++ )
         for ( int j = 1; j <= N; j++ )
             if ( i == j )   matrix[i][j] = 0;
             else 
                 if ( matrix[i][j] == 0 && i != j)
                     matrix[i][j] = inf;
-
+ 
     // Roy-Floyd
     for ( int k = 1; k <= N; k++ )
         for ( int i = 1; i <= N; i++ )
             for ( int j = 1; j <= N; j++ )
                 if ( matrix[i][j] > matrix[i][k] + matrix[k][j] )
                     matrix[i][j] = matrix[i][k] + matrix[k][j];
-
+ 
     // afisare
     for ( int i = 1; i <= N; i++ )
         for ( int j = 1; j <= N; j++ )
             if ( matrix[i][j] == inf ) matrix[i][j] = 0;
-
+ 
     for ( int i = 1; i <= N; i++ )
     {
         for ( int j = 1; j <= N; j++ )
@@ -686,8 +696,9 @@ void Graph :: RoyFloyd(int matrix[105][105])
             fout<<"\n";
     }
 }
-
+ 
 // Diametru arbore
+ 
 void Graph :: BFS_Darb(int Start_node, int &max_diameter, int &next_node)
 {
     int d[Max];
@@ -697,7 +708,7 @@ void Graph :: BFS_Darb(int Start_node, int &max_diameter, int &next_node)
     visited[Start_node] = 1;
     q.push(Start_node);
     d[Start_node] = 1;
-
+ 
     while ( !q.empty() )
     {
         int node = q.front();
@@ -710,7 +721,7 @@ void Graph :: BFS_Darb(int Start_node, int &max_diameter, int &next_node)
             }
         q.pop();
     }
-
+ 
     max_diameter = 0;
     for ( int i = 1; i <= NumberOfNodes; i++ )
         if ( d[i] > max_diameter )
@@ -719,7 +730,7 @@ void Graph :: BFS_Darb(int Start_node, int &max_diameter, int &next_node)
             next_node = i;
         }
 }
-
+ 
 void Graph :: Darb()
 {
     int first, next, max_diameter;
@@ -727,20 +738,80 @@ void Graph :: Darb()
     BFS_Darb(first, max_diameter, next);
     fout << max_diameter;
 }
-
+ 
+// Ciclu eulerian
+ 
+vector < pair<int,int> > edges[Max];
+ 
+void Graph :: Euler(int Start, vector <bool>&visited, vector <int>&solutions)
+{
+    stack <int> Stack;
+    Stack.push(Start);
+    while ( !Stack.empty() )
+    {
+        int node = Stack.top();
+        if ( ! edges[node].empty() )
+        {
+            int next = edges[node].back().first;
+            int edge = edges[node].back().second;
+            edges[node].pop_back();
+            if ( ! visited[edge] )
+            {
+                visited[edge] = true;
+                Stack.push(next);
+            }
+        }
+        else
+        {
+            solutions.push_back(node);
+            Stack.pop();
+        }
+    }
+}
+ 
+void Graph :: Eulerian_Cycle ()
+{
+    int x, y;
+ 
+    for ( int i = 1; i <= NumberOfEdges; i++ )
+    {
+        fin >> x >> y; 
+        edges[x].push_back( make_pair(y, i) );
+        edges[y].push_back( make_pair(x, i) );
+    }
+    
+    // daca nu avem ciclu eulerian
+    for ( int i = 0; i <= NumberOfNodes; i++ )
+        if ( edges[i].size() % 2 )
+        {
+            fout << "-1";
+            return;
+        }
+    
+    vector <bool> visited(Max2, false);
+    vector <int> solutions;
+ 
+    Euler(1, visited, solutions);
+ 
+    // afisare
+    for ( int i = 0; i < solutions.size() - 1; i++ )
+        fout << solutions[i] << " ";
+}
+ 
 int main()
 {
+    int number_of_problem;
     fin >> number_of_problem;
-
     fin >> N >> M;
     Graph G(N, M);
-
+ 
     if ( number_of_problem == 1 )
     {
         // BFS
-        fin >> S;
+        int Start_Node;
+        fin >> Start_Node;
         G.Read_DirectedGraph();
-        G.BFS(S);
+        G.BFS(Start_Node);
     }
     
     if ( number_of_problem == 2 )
@@ -776,6 +847,7 @@ int main()
     if ( number_of_problem == 6 )
     {
         // Hakimi
+        vector<int> values;
         int x;
         for ( int i = 1; i <= N; i++ )
         {
@@ -822,13 +894,18 @@ int main()
         // Roy-Floyd
         G.RoyFloyd(matrix);
     }
-
+ 
     if ( number_of_problem == 12 )
     {
         // Diametru Arbore
         Graph G1(N, N-1);
         G1.Read_UndirectedGraph();
         G1.Darb();
+    }
+    if ( number_of_problem == 13 )
+    {
+        // Ciclu eulerian
+        G.Eulerian_Cycle();
     }
     
     return 0;
