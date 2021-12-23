@@ -46,8 +46,8 @@ public:
     void BFS(int &Start_Node);
  
     // DFS ( numar componente conexe ) -- 2
-    void DFS(int Start_Node, bool visited[]);
-    int NumberOfConnectedComponents();
+    void DFS(int Start_Node);
+    void NumberOfConnectedComponents();
  
     // Biconex -- 3
     void DFS_BiconnectedComponents(int node, int parent, bool visited[], int up[], int levels[]);
@@ -55,7 +55,7 @@ public:
  
     // Componente tare conexe -- 4
     void Read_Directed_Transpose_Graph();
-    void DFS(int nod);
+    void DFS_SCC(int nod);
     void DFS_transpose(int node, int ct, bool visitedDFSt[Max]);    
     void SCC();
     void Crossing();
@@ -178,7 +178,7 @@ void Graph :: BFS(int &Start_Node)
  
 // DFS ( componente conexe )
  
-void Graph :: DFS(int Start_Node, bool visited[])
+void Graph :: DFS(int Start_Node)
 {
     visited[Start_Node] = 1;    // se viziteaza nodul de start
     // cautam primul vecin nevizitat al nodului de start
@@ -186,15 +186,11 @@ void Graph :: DFS(int Start_Node, bool visited[])
     // din varful de start sunt vizitate
     for ( int i = 0; i < adjacencyList[Start_Node].size(); i++ )
         if ( visited[adjacencyList[Start_Node][i]] == 0 )
-            DFS(adjacencyList[Start_Node][i], visited);
+            DFS(adjacencyList[Start_Node][i]);
 }
  
-int Graph :: NumberOfConnectedComponents()
+void Graph :: NumberOfConnectedComponents()
 {
-    bool visited[NumberOfNodes];
-    for ( int i = 0; i < NumberOfNodes; i++ )
-        visited[i] = 0;
- 
     int number_of_connected_components = 0;
     for ( int i = 1; i <= NumberOfNodes; i++ )
         if ( !visited[i] )  // daca varful curent nu este vizitat
@@ -202,9 +198,9 @@ int Graph :: NumberOfConnectedComponents()
             // avem o componenta conexa
             // parcurgem graful pornind din nodul curent si marcam in vectorul vizitat varfurile parcurse
             number_of_connected_components++;
-            DFS(i, visited);
+            DFS(i);
         }
-    return number_of_connected_components;
+    fout << number_of_connected_components;
 }
  
 // Biconex 
@@ -270,13 +266,13 @@ void Graph :: Read_Directed_Transpose_Graph()
     }
 }
  
-void Graph :: DFS(int node)
+void Graph :: DFS_SCC(int node)
 {
     visitedDFS[node] = 1;
  
     for ( auto i : adjacencyList[node] )
         if ( !visitedDFS[i] )
-            DFS(i);
+            DFS_SCC(i);
  
     // pentru nodul x putem stabili timpul de finalizare si il memoram in stiva
     Stack[++top] = node;    
@@ -287,7 +283,7 @@ void Graph :: Crossing()   // cel initial
 {
     for ( int i = 1; i <= NumberOfNodes; i++ )
         if ( ! visitedDFS[i] )
-            DFS(i);
+            DFS_SCC(i);
 }
  
 void Graph :: DFS_transpose(int node, int ct, bool visitedDFSt[Max])
@@ -821,7 +817,7 @@ int main()
     {
         // DFS
         G.Read_UndirectedGraph();
-        fout << G.NumberOfConnectedComponents();
+        G.NumberOfConnectedComponents();
     }
         
     if ( number_of_problem == 3 )
