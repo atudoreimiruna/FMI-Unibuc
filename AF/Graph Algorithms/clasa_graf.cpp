@@ -486,7 +486,8 @@ int Graph :: Find_Root(int node)
     }
     return node;
 }
- 
+
+//  Atunci cand vrem sa unim 2 multimi determinam radacinile celor 2 arbori si le conectam printr-o muchie
 void Graph :: Union_Root(int node1, int node2)
 {
     int root_node1 = Find_Root(node1);
@@ -734,6 +735,8 @@ void Graph :: BFS_Darb(int Start_node, int &max_diameter, int &next_node)
 void Graph :: Darb()
 {
     int first, next, max_diameter;
+    // pornind cu prima parcurgere dintr-un nod oarecare şi 
+    // continuând cu a doua din ultimul nod în care am ajuns
     BFS_Darb(1, max_diameter, first);
     BFS_Darb(first, max_diameter, next);
     fout << max_diameter;
@@ -757,7 +760,7 @@ void Graph :: Euler(int Start, vector <bool>&visited, vector <int>&solutions)
             edges[node].pop_back();
             if ( ! visited[edge] )
             {
-                visited[edge] = true;
+                visited[edge] = true; 
                 Stack.push(next);
             }
         }
@@ -767,7 +770,7 @@ void Graph :: Euler(int Start, vector <bool>&visited, vector <int>&solutions)
             Stack.pop();
         }
     }
-}
+} 
  
 void Graph :: Eulerian_Cycle ()
 {
